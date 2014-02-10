@@ -1,4 +1,4 @@
-package org.toya.core.memcached;
+package org.toya.core.jetty;
 
 import java.io.IOException;
 
@@ -12,9 +12,6 @@ import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Request;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.handler.AbstractHandler;
-import org.mortbay.jetty.nio.SelectChannelConnector;
-import org.mortbay.jetty.security.SslSocketConnector;
-import org.mortbay.thread.QueuedThreadPool;
 
 public class StartJettyTest {
 	

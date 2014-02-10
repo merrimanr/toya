@@ -148,7 +148,7 @@ public class Client {
 	// Env variables to be setup for the shell command
 	private Map<String, String> shellEnv = new HashMap<String, String>();
 	// Shell Command Container priority
-	private int moyaPriority = 0;
+	private int toyaPriority = 0;
 
 	// Amt of memory to request for container in which shell script will be
 	// executed
@@ -213,7 +213,7 @@ public class Client {
 		yarnClient.init(conf);
 		opts = new Options();
 		opts.addOption("appname", true,
-				"Application Name. Default value - MoYa");
+				"Application Name. Default value - toya");
 		opts.addOption("priority", true, "Application Priority. Default 0");
 		opts.addOption("queue", true,
 				"RM Queue in which this application is to be submitted");
@@ -222,9 +222,9 @@ public class Client {
 		opts.addOption("jar", true,
 				"Jar file containing the application master");
 		opts.addOption("lib", true,
-				"Runnable Jar with MOYA inside");
-		opts.addOption("moya_priority", true,
-				"Priority for the MOYA containers");
+				"Runnable Jar with toya inside");
+		opts.addOption("toya_priority", true,
+				"Priority for the toya containers");
 		opts.addOption("container_memory", true,
 				"Amount of memory in MB to be requested to run the shell command");
 		opts.addOption("num_containers", true,
@@ -232,7 +232,7 @@ public class Client {
 		opts.addOption("log_properties", true, "log4j.properties file");
 		opts.addOption("ZK", true, "Comma seperated list of ZK hosts ie - host1:port,host2:port");
     opts.addOption("webapp_root", true, "Webapp root on HDFS");
-    opts.addOption("start_port", true, "Start of port range");
+    opts.addOption("start_port", true, "Start of tomcat port range on each node");
 		opts.addOption("debug", false, "Dump out debug information");
 		opts.addOption("help", false, "Print usage");
 	}
@@ -277,7 +277,7 @@ public class Client {
 
 		}
 
-		appName = cliParser.getOptionValue("appname", "MoYa");
+		appName = cliParser.getOptionValue("appname", "toya");
 		amPriority = Integer
 				.parseInt(cliParser.getOptionValue("priority", "0"));
 		amQueue = cliParser.getOptionValue("queue", "default");
@@ -321,12 +321,12 @@ public class Client {
 
 		if (!cliParser.hasOption("lib")) {
 			throw new IllegalArgumentException(
-					"The runnable MOYA jar to be started by application master");
+					"The runnable TOYA jar to be started by application master");
 		}
 		localLibJar = cliParser.getOptionValue("lib");
 
-		moyaPriority = Integer.parseInt(cliParser.getOptionValue(
-				"moya_priority", "0"));
+		toyaPriority = Integer.parseInt(cliParser.getOptionValue(
+				"toya_priority", "0"));
 
 		containerMemory = Integer.parseInt(cliParser.getOptionValue(
 				"container_memory", "128"));
@@ -516,26 +516,26 @@ public class Client {
 		LOG.info("Set the environment for the application master");
 		Map<String, String> env = new HashMap<String, String>();
 
-		// put the AM jar into env and MOYA Runnable
+		// put the AM jar into env and TOYA Runnable
 		// using the env info, the application master will create the correct
 		// local resource for the
 		// eventual containers that will be launched to execute the shell
 		// scripts
-		env.put(MConstants.APPLICATIONMASTERJARLOCATION,
+		env.put(TConstants.APPLICATIONMASTERJARLOCATION,
 				amJarLocation);
-		env.put(MConstants.APPLICATIONMASTERJARTIMESTAMP,
+		env.put(TConstants.APPLICATIONMASTERJARTIMESTAMP,
 				Long.toString(amJarTimestamp));
-		env.put(MConstants.APPLICATIONMASTERJARLEN,
+		env.put(TConstants.APPLICATIONMASTERJARLEN,
 				Long.toString(amJarLen));
 
-		env.put(MConstants.LIBSLOCATION, libsLocation);
-		env.put(MConstants.LIBSTIMESTAMP, Long.toString(libsTimestamp));
-		env.put(MConstants.LIBSLEN, Long.toString(libsLen));
+		env.put(TConstants.LIBSLOCATION, libsLocation);
+		env.put(TConstants.LIBSTIMESTAMP, Long.toString(libsTimestamp));
+		env.put(TConstants.LIBSLEN, Long.toString(libsLen));
 		
-		env.put(MConstants.ZOOKEEPERHOSTS, ZKHosts);
+		env.put(TConstants.ZOOKEEPERHOSTS, ZKHosts);
 
-    env.put(MConstants.HDFSWEBAPPROOT, hdfsWebappRoot);
-    env.put(MConstants.STARTPORT, startPort);
+    env.put(TConstants.HDFSWEBAPPROOT, hdfsWebappRoot);
+    env.put(TConstants.STARTPORT, startPort);
 
 		// Add AppMaster.jar location to classpath
 		// At some point we should not be required to add
@@ -581,7 +581,7 @@ public class Client {
 		// Set params for Application Master
 		vargs.add("--container_memory " + String.valueOf(containerMemory));
 		vargs.add("--num_containers " + String.valueOf(numContainers));
-		vargs.add("--priority " + String.valueOf(moyaPriority));
+		vargs.add("--priority " + String.valueOf(toyaPriority));
 		if (!localLibJar.isEmpty()) {
 			vargs.add("--lib " + localLibJar + "");
 		}

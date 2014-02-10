@@ -26,7 +26,7 @@ import org.apache.hadoop.classification.InterfaceStability;
  */
 @InterfaceAudience.Public
 @InterfaceStability.Unstable
-public class MConstants {
+public class TConstants {
 	
 	  /**
 	   * List of ZooKeeper Hosts to use

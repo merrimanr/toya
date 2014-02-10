@@ -1,0 +1,2 @@
+#!/bin/sh
+HADOOP_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5000" hadoop jar toya-client-0.0.1-SNAPSHOT-jar-with-dependencies.jar org.toya.core.yarn.Client -jar toya-client-0.0.1-SNAPSHOT-jar-with-dependencies.jar -lib toya-server-0.0.1-SNAPSHOT-jar-with-dependencies.jar  -num_containers 2 -container_memory 512 -ZK sandbox.hortonworks.com:2181 -master_memory 128 -webapp_root /tmp/toya -start_port 8100

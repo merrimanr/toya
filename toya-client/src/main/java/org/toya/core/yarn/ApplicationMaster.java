@@ -147,8 +147,6 @@ public class ApplicationMaster {
 
   private static final Log LOG = LogFactory.getLog(ApplicationMaster.class);
 
-  private final String CanMainClass =
-	      "org.moya.core.memcached.StartMemcached"; //StartMemcached
   // Configuration
   private Configuration conf;
 
@@ -310,7 +308,7 @@ public class ApplicationMaster {
     opts.addOption("app_attempt_id", true,
         "App Attempt ID. Not to be used unless for testing purposes");
     opts.addOption("lib", true,
-        "libs required to run Moya");
+        "libs required to run Toya");
     opts.addOption("shell_script", true,
         "Location of the shell script to be executed");
     opts.addOption("shell_args", true, "Command line args for the shell script");
@@ -406,42 +404,42 @@ public class ApplicationMaster {
       }
     }
 
-    if (envs.containsKey(MConstants.APPLICATIONMASTERJARLOCATION)) {
-      shellScriptPath = envs.get(MConstants.APPLICATIONMASTERJARLOCATION);
+    if (envs.containsKey(TConstants.APPLICATIONMASTERJARLOCATION)) {
+      shellScriptPath = envs.get(TConstants.APPLICATIONMASTERJARLOCATION);
 
-      if (envs.containsKey(MConstants.APPLICATIONMASTERJARTIMESTAMP)) {
+      if (envs.containsKey(TConstants.APPLICATIONMASTERJARTIMESTAMP)) {
         shellScriptPathTimestamp = Long.valueOf(envs
-            .get(MConstants.APPLICATIONMASTERJARTIMESTAMP));
+            .get(TConstants.APPLICATIONMASTERJARTIMESTAMP));
       }
-      if (envs.containsKey(MConstants.APPLICATIONMASTERJARLEN)) {
+      if (envs.containsKey(TConstants.APPLICATIONMASTERJARLEN)) {
         shellScriptPathLen = Long.valueOf(envs
-            .get(MConstants.APPLICATIONMASTERJARLEN));
+            .get(TConstants.APPLICATIONMASTERJARLEN));
       }
 
-      if (envs.containsKey(MConstants.LIBSLOCATION)) {
-          libsPath = envs.get(MConstants.LIBSLOCATION);
+      if (envs.containsKey(TConstants.LIBSLOCATION)) {
+          libsPath = envs.get(TConstants.LIBSLOCATION);
 
-          if (envs.containsKey(MConstants.LIBSTIMESTAMP)) {
+          if (envs.containsKey(TConstants.LIBSTIMESTAMP)) {
             libsTimestamp = Long.valueOf(envs
-                .get(MConstants.LIBSTIMESTAMP));
+                .get(TConstants.LIBSTIMESTAMP));
           }
-          if (envs.containsKey(MConstants.LIBSLEN)) {
+          if (envs.containsKey(TConstants.LIBSLEN)) {
             libsPathLen = Long.valueOf(envs
-                .get(MConstants.LIBSLEN));
+                .get(TConstants.LIBSLEN));
           }
           }
       
       //TODO
-    if (envs.containsKey(MConstants.ZOOKEEPERHOSTS)) {
-        ZKHosts = envs.get(MConstants.ZOOKEEPERHOSTS);
+    if (envs.containsKey(TConstants.ZOOKEEPERHOSTS)) {
+        ZKHosts = envs.get(TConstants.ZOOKEEPERHOSTS);
     }
       
-    if (envs.containsKey(MConstants.HDFSWEBAPPROOT)) {
-      hdfsWebappRoot = envs.get(MConstants.HDFSWEBAPPROOT);
+    if (envs.containsKey(TConstants.HDFSWEBAPPROOT)) {
+      hdfsWebappRoot = envs.get(TConstants.HDFSWEBAPPROOT);
     }
 
-    if (envs.containsKey(MConstants.STARTPORT)) {
-        startPort = envs.get(MConstants.STARTPORT);
+    if (envs.containsKey(TConstants.STARTPORT)) {
+        startPort = envs.get(TConstants.STARTPORT);
       }
 
 
@@ -577,7 +575,7 @@ public class ApplicationMaster {
     // signal to the RM
     LOG.info("Application completed. Signalling finish to RM");
     
-    //TODO Remove MOYA NODE
+    //TODO Remove TOYA NODE
     try {
 		DeleteGroup.main(new String[] {ZKHosts, "toya"});
 	} catch (Exception e1) {
@@ -872,9 +870,9 @@ public class ApplicationMaster {
       // can do basic sanity checks for the local resource 
       // after it has been copied over to ensure it is the same 
       // resource the client intended to use with the application
-      LOG.debug("DSConstants Jar: " + MConstants.APPLICATIONMASTERJARLOCATION);
-      LOG.debug("DSConstants Size: "+MConstants.APPLICATIONMASTERJARTIMESTAMP);
-      LOG.debug("DSConstants TimeStamp: "+MConstants.APPLICATIONMASTERJARLEN);
+      LOG.debug("DSConstants Jar: " + TConstants.APPLICATIONMASTERJARLOCATION);
+      LOG.debug("DSConstants Size: "+ TConstants.APPLICATIONMASTERJARTIMESTAMP);
+      LOG.debug("DSConstants TimeStamp: "+ TConstants.APPLICATIONMASTERJARLEN);
 
       amJarRsrc.setTimestamp(shellScriptPathTimestamp);
       libsJarRsrc.setTimestamp(libsTimestamp);
@@ -893,9 +891,9 @@ public class ApplicationMaster {
       LOG.info("Set the environment for the application master");
       Map<String, String> env = new HashMap<String, String>();
       
-      env.put(MConstants.ZOOKEEPERHOSTS, ZKHosts);
-      env.put(MConstants.HDFSWEBAPPROOT, hdfsWebappRoot);
-      env.put(MConstants.STARTPORT, startPort);
+      env.put(TConstants.ZOOKEEPERHOSTS, ZKHosts);
+      env.put(TConstants.HDFSWEBAPPROOT, hdfsWebappRoot);
+      env.put(TConstants.STARTPORT, startPort);
 
       // Add AppMaster.jar location to classpath 		
       // At some point we should not be required to add 
@@ -941,7 +939,7 @@ public class ApplicationMaster {
 //      vargs.add("1>" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/stdout");
 //      vargs.add("2>" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/stderr");
 
-      vargs.add(Environment.JAVA_HOME.$() + "/bin/java"); //-jar /tmp/moya-core-RUNNABLE.jar
+      vargs.add(Environment.JAVA_HOME.$() + "/bin/java");
       vargs.add("-Xdebug");
       vargs.add("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=500" + container.getId().getId());
       vargs.add("-jar Runnable.jar");

@@ -11,7 +11,7 @@ import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
-import org.toya.core.yarn.MConstants;
+import org.toya.core.yarn.TConstants;
 import zookeeper.groups.JoinGroup;
 
 import javax.servlet.ServletException;
@@ -29,8 +29,8 @@ public class StartTomcat extends Configured implements Tool {
 
   public int run(String[] args) throws ServletException, IOException {
     Map<String, String> envs = System.getenv();
-    String hdfsWebappRoot = envs.get(MConstants.HDFSWEBAPPROOT);
-    int tomcatPort = Integer.parseInt(envs.get(MConstants.STARTPORT)) + Integer.parseInt(args[0]);
+    String hdfsWebappRoot = envs.get(TConstants.HDFSWEBAPPROOT);
+    int tomcatPort = Integer.parseInt(envs.get(TConstants.STARTPORT)) + Integer.parseInt(args[0]);
 
     Configuration conf = getConf();
     conf.addResource(new Path(envs.get("HADOOP_CONF_DIR"), "core-site.xml"));
@@ -78,8 +78,8 @@ public class StartTomcat extends Configured implements Tool {
     LOG.debug("Getting ENV Settings and ZK Servers");
     String ZKHosts = "";
 
-    if (envs.containsKey(MConstants.ZOOKEEPERHOSTS)) {
-      ZKHosts = envs.get(MConstants.ZOOKEEPERHOSTS);
+    if (envs.containsKey(TConstants.ZOOKEEPERHOSTS)) {
+      ZKHosts = envs.get(TConstants.ZOOKEEPERHOSTS);
     }
 
     System.out.println("ZKH = "+ ZKHosts);

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/toya-client/toya-client.iml" filepath="$PROJECT_DIR$/toya-client/toya-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/toya-common/toya-common.iml" filepath="$PROJECT_DIR$/toya-common/toya-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/toya-main.iml" filepath="$PROJECT_DIR$/toya-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/toya-server/toya-server.iml" filepath="$PROJECT_DIR$/toya-server/toya-server.iml" />
+    </modules>
+  </component>
+</project>
+
